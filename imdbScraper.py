@@ -12,15 +12,12 @@ writer.writeheader()
 x = 1
 s = requests.Session()
 
-headers = {"User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"}
-
 
 for page in range(5755,7000, 50):
     print ('--- page Number', round(page / 50 + 1 - .02), '---')
 
     try:
-        r = requests.get(f'https://www.imdb.com/search/title/?title_type=feature,tv_movie,tv_series,tv_special,short&start={page}&ref_=adv_nxt',
-        headers=headers)
+        r = requests.get(f'https://www.imdb.com/search/title/?title_type=feature,tv_movie,tv_series,tv_special,short&start={page}&ref_=adv_nxt')
     except requests.exceptions.ConnectionError:
         r.status_code = "Connection refused"
     # r = requests.get('https://www.imdb.com/search/title/?title_type=feature,tv_movie,tv_series,tv_episode,tv_special,tv_miniseries,short&adult=include&start={i}&ref_=adv_nxt',
@@ -57,7 +54,7 @@ for page in range(5755,7000, 50):
         first_link = pt.find('h3', {'class':'lister-item-header'}).find('a').attrs['href']
 
         try:
-            r2 = requests.get('http://imdb.com'+first_link,headers=headers)
+            r2 = requests.get('http://imdb.com'+first_link)
         except requests.exceptions.ConnectionError:
             r2.status_code = "Connection refused"
 
@@ -103,7 +100,7 @@ for page in range(5755,7000, 50):
         
 
         try:
-            r3 = requests.get('http://imdb.com'+second_link,headers=headers)
+            r3 = requests.get('http://imdb.com'+second_link)
         except requests.exceptions.ConnectionError:
             r3.status_code = "Connection refused"
 
